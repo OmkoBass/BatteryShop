@@ -12,6 +12,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Battery_Shop.Data.EmployeeRepo;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Battery_Shop.Data.AuthRepo;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Battery_Shop
 {
@@ -34,6 +39,34 @@ namespace Battery_Shop
             });
 
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+
+            services.AddScoped<IEmployeeRepo, MockEmployeeRepo>();
+            services.AddScoped<IAuthRepo, MockAuthRepo>();
+            services.AddScoped<IUnitOfWork, MockUnitOfWork>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            // JWT KEY, Don't worry this is not going to deployment
+            var key = "Testing12 qwe qwkej qiowejio qjweioj ioqjweoi 3";
+
+            services.AddScoped<IAuthRepo, MockAuthRepo>();
+
+            _ = services.AddAuthentication(x =>
+              {
+                  x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                  x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+              }).AddJwtBearer(x =>
+              {
+                  x.RequireHttpsMetadata = false;
+                  x.SaveToken = true;
+                  x.TokenValidationParameters = new TokenValidationParameters
+                  {
+                      ValidateIssuerSigningKey = true,
+                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+                      ValidateIssuer = false,
+                      ValidateAudience = false
+                  };
+              });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
