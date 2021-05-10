@@ -50,6 +50,8 @@ namespace Battery_Shop.Controllers
             if (ModelState.IsValid)
             {
                 var AddedBattery = _mapper.Map<Battery>(Battery);
+                AddedBattery.Warrant = DateTime.Now.AddDays(2);
+                AddedBattery.Life = 100;
 
                 await _unitOfWork.IBatteryRepo.AddBattery(AddedBattery);
                 await _unitOfWork.Complete();

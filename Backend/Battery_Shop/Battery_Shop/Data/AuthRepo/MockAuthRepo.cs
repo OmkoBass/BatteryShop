@@ -36,7 +36,8 @@ namespace Battery_Shop.Data.AuthRepo
                     {
                         new Claim("Id", Employee.Id.ToString()),
                         new Claim("Username", Employee.Username),
-                        new Claim("Job", Employee.Job.ToString())
+                        new Claim("Job", Employee.Job.ToString()),
+                        new Claim("BatteryShopId", Employee.BatteryShopId.ToString()),
                     }),
                     Expires = DateTime.UtcNow.AddDays(7),
                     SigningCredentials =

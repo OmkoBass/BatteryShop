@@ -2,16 +2,17 @@
 using Battery_Shop.Data;
 using Battery_Shop.Dtos;
 using Battery_Shop.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Battery_Shop.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase
@@ -50,7 +51,10 @@ namespace Battery_Shop.Controllers
         {
             if(ModelState.IsValid)
             {
+                int BatteryShopId = Int32.Parse(User.FindFirst("BatteryShopId").Value);
+
                 var AddedEmployee = _mapper.Map<Employee>(Employee);
+                AddedEmployee.BatteryShopId = BatteryShopId;
 
                 await  _unitOfWork.IEmployeeRepo.AddEmployee(AddedEmployee);
                 await _unitOfWork.Complete();

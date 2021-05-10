@@ -28,18 +28,18 @@ namespace Battery_Shop.Dtos
         public string Password { get; set; }
 
         [Required]
-        //[MinLength(3)]
-        //[MaxLength(16)]
+        [MinLength(3)]
+        [MaxLength(16)]
         public string Name { get; set; }
 
         [Required]
-        //[MinLength(3)]
-        //[MaxLength(32)]
+        [MinLength(3)]
+        [MaxLength(32)]
         public string LastName { get; set; }
 
         [Required]
         public JobType Job { get; set; }
 
-        public int BatteryShopId { get; set; }
+        //public int BatteryShopId { get; set; }
     }
 }

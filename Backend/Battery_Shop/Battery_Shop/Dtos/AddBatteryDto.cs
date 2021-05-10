@@ -16,12 +16,6 @@ namespace Battery_Shop.Dtos
         [Range(0, Int16.MaxValue)]
         public int Price { get; set; }
 
-        [Range(0, 100)]
-        public int Life { get; set; }
-
-        [DataType(DataType.Date)]
-        public DateTime Warrant { get; set; }
-
         [Required]
         public int StorageId { get; set; }
     }
