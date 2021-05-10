@@ -15,6 +15,11 @@ namespace Battery_Shop.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Required]
+        [MinLength(3)]
+        [MaxLength(32)]
+        public string Name { get; set; }
+
         public ICollection<Battery> Batteries { get; set; }
 
         [Required]
