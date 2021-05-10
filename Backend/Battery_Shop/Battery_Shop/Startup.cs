@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Battery_Shop.Data.AuthRepo;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Battery_Shop.Data.BatteryRepo;
+using Battery_Shop.Data.StorageRepo;
 
 namespace Battery_Shop
 {
@@ -41,6 +43,8 @@ namespace Battery_Shop
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
             services.AddScoped<IEmployeeRepo, MockEmployeeRepo>();
+            services.AddScoped<IStorageRepo, MockStorageRepo>();
+            services.AddScoped<IBatteryRepo, MockBatteryRepo>();
             services.AddScoped<IAuthRepo, MockAuthRepo>();
             services.AddScoped<IUnitOfWork, MockUnitOfWork>();
 
