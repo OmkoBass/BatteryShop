@@ -4,14 +4,16 @@ using Battery_Shop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Battery_Shop.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210510124012_BatteryHasStorageId")]
+    partial class BatteryHasStorageId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,11 +134,6 @@ namespace Battery_Shop.Migrations
                     b.Property<int?>("BatteryShopId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BatteryShopId");
@@ -146,13 +143,11 @@ namespace Battery_Shop.Migrations
 
             modelBuilder.Entity("Battery_Shop.Models.Battery", b =>
                 {
-                    b.HasOne("Battery_Shop.Models.Storage", "Storage")
+                    b.HasOne("Battery_Shop.Models.Storage", null)
                         .WithMany("Batteries")
                         .HasForeignKey("StorageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Storage");
                 });
 
             modelBuilder.Entity("Battery_Shop.Models.Employee", b =>
@@ -169,7 +164,7 @@ namespace Battery_Shop.Migrations
             modelBuilder.Entity("Battery_Shop.Models.Storage", b =>
                 {
                     b.HasOne("Battery_Shop.Models.BatteryShop", "BatteryShop")
-                        .WithMany("Storages")
+                        .WithMany()
                         .HasForeignKey("BatteryShopId");
 
                     b.Navigation("BatteryShop");
@@ -178,8 +173,6 @@ namespace Battery_Shop.Migrations
             modelBuilder.Entity("Battery_Shop.Models.BatteryShop", b =>
                 {
                     b.Navigation("Employees");
-
-                    b.Navigation("Storages");
                 });
 
             modelBuilder.Entity("Battery_Shop.Models.Storage", b =>
