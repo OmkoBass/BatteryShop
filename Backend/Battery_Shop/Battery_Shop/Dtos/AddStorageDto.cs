@@ -12,8 +12,5 @@ namespace Battery_Shop.Dtos
         [MinLength(3)]
         [MaxLength(32)]
         public string Name { get; set; }
-
-        [Required]
-        public int BatterShopId { get; set; }
     }
 }

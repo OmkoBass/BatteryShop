@@ -2,6 +2,8 @@
 using Battery_Shop.Data;
 using Battery_Shop.Dtos;
 using Battery_Shop.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Battery_Shop.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class StorageController : ControllerBase
@@ -48,7 +51,10 @@ namespace Battery_Shop.Controllers
         {
             if (ModelState.IsValid)
             {
+                int BatteryShopId = Int32.Parse(User.FindFirst("BatteryShopId").Value);
+
                 var AddedStorage = _mapper.Map<Storage>(Storage);
+                AddedStorage.BatterShopId = BatteryShopId;
 
                 await _unitOfWork.IStorageRepo.AddStorage(AddedStorage);
                 await _unitOfWork.Complete();
