@@ -22,7 +22,6 @@ namespace Battery_Shop.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BatteryShop>(BatteryShop => BatteryShop.HasIndex(b => b.Name).IsUnique());
-            modelBuilder.Entity<Battery>().Property(b => b.Warrant).HasDefaultValueSql("getdate()");
         }
     }
 }
