@@ -1,0 +1,18 @@
+﻿using AutoMapper;
+using Battery_Shop.Dtos;
+using Battery_Shop.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Battery_Shop.Profiles
+{
+    public class EmployeeProfile : Profile
+    {
+        public EmployeeProfile()
+        {
+            CreateMap<Employee, AddEmployeeDto>().ReverseMap();
+        }
+    }
+}
