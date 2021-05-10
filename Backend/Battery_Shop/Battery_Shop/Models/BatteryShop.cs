@@ -9,7 +9,11 @@ namespace Battery_Shop.Models
 {
     public class BatteryShop
     {
-        public BatteryShop() => this.Employees = new HashSet<Employee>();
+        public BatteryShop() 
+        {
+            this.Employees = new HashSet<Employee>();
+            this.Storages = new HashSet<Storage>();
+        }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -25,6 +29,7 @@ namespace Battery_Shop.Models
         public string Address { get; set; }
 
         public ICollection<Employee> Employees { get; set; }
+        public ICollection<Storage> Storages { get; set; }
 
         [Required]
         [MinLength(9)]

@@ -88,7 +88,7 @@ namespace Battery_Shop.Controllers
         {
             var Employee = await _unitOfWork.IEmployeeRepo.GetEmployee(Id);
 
-            if(Employee != null)
+            if(Employee == null)
             {
                 return NotFound(new { Message = $"Employee with Id:{Id} not found." });
             }

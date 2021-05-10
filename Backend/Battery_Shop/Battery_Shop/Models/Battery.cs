@@ -26,5 +26,9 @@ namespace Battery_Shop.Models
 
         [DataType(DataType.Date)]
         public DateTime Warrant { get; set; }
+
+        [Required]
+        public int StorageId { get; set; }
+        public virtual Storage Storage { get; set; }
     }
 }
