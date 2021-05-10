@@ -25,9 +25,19 @@ namespace Battery_Shop.Models
         [Required]
         [MinLength(3)]
         [MaxLength(16)]
-        public string Name { get; set; }
+        public string Username { get; set; }
 
         [Required]
+        [MinLength(8)]
+        [MaxLength(64)]
+        public string Password { get; set; }
+
+        //[Required]
+        [MinLength(3)]
+        [MaxLength(16)]
+        public string Name { get; set; }
+
+        //[Required]
         [MinLength(3)]
         [MaxLength(32)]
         public string LastName { get; set; }
@@ -35,7 +45,8 @@ namespace Battery_Shop.Models
         [Required]
         public JobType Job { get; set; }
 
-        public int BatterShopId { get; set; }
+        [Required]
+        public int BatteryShopId { get; set; }
         public virtual BatteryShop BatteryShop { get; set; }
     }
 }

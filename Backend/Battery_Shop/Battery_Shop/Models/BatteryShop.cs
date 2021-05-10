@@ -20,6 +20,10 @@ namespace Battery_Shop.Models
         [MaxLength(16)]
         public string Name { get; set; }
 
+        [MinLength(3)]
+        [MaxLength(64)]
+        public string Address { get; set; }
+
         public ICollection<Employee> Employees { get; set; }
 
         [Required]
