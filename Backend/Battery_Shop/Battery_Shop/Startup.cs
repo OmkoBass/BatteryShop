@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Battery_Shop.Data.BatteryRepo;
 using Battery_Shop.Data.StorageRepo;
+using Battery_Shop.Data.CustomerRepo;
 
 namespace Battery_Shop
 {
@@ -35,6 +36,16 @@ namespace Battery_Shop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFromAll",
+                    builder => builder
+                    .WithMethods().AllowAnyMethod()
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader());
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Battery_Shop", Version = "v1" });
@@ -73,6 +84,7 @@ namespace Battery_Shop
             services.AddScoped<IEmployeeRepo, MockEmployeeRepo>();
             services.AddScoped<IStorageRepo, MockStorageRepo>();
             services.AddScoped<IBatteryRepo, MockBatteryRepo>();
+            services.AddScoped<ICustomerRepo, MockCustomerRepo>();
             services.AddScoped<IAuthRepo, MockAuthRepo>();
             services.AddScoped<IUnitOfWork, MockUnitOfWork>();
 
@@ -110,6 +122,8 @@ namespace Battery_Shop
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Battery_Shop v1"));
             }
+
+            app.UseCors("AllowFromAll");
 
             app.UseRouting();
 
