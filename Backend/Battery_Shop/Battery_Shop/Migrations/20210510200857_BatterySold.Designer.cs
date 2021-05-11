@@ -4,14 +4,16 @@ using Battery_Shop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Battery_Shop.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210510200857_BatterySold")]
+    partial class BatterySold
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,9 +27,6 @@ namespace Battery_Shop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
 
                     b.Property<int>("Life")
                         .HasColumnType("int");
@@ -50,8 +49,6 @@ namespace Battery_Shop.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
 
                     b.HasIndex("StorageId");
 
@@ -85,38 +82,6 @@ namespace Battery_Shop.Migrations
                         .IsUnique();
 
                     b.ToTable("BatteryShops");
-                });
-
-            modelBuilder.Entity("Battery_Shop.Models.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<int>("BatteryShopId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BatteryShopId");
-
-                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("Battery_Shop.Models.Employee", b =>
@@ -184,32 +149,13 @@ namespace Battery_Shop.Migrations
 
             modelBuilder.Entity("Battery_Shop.Models.Battery", b =>
                 {
-                    b.HasOne("Battery_Shop.Models.Customer", "Customer")
-                        .WithMany("Batteries")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Battery_Shop.Models.Storage", "Storage")
                         .WithMany("Batteries")
                         .HasForeignKey("StorageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
-
                     b.Navigation("Storage");
-                });
-
-            modelBuilder.Entity("Battery_Shop.Models.Customer", b =>
-                {
-                    b.HasOne("Battery_Shop.Models.BatteryShop", "BatteryShop")
-                        .WithMany("Customers")
-                        .HasForeignKey("BatteryShopId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BatteryShop");
                 });
 
             modelBuilder.Entity("Battery_Shop.Models.Employee", b =>
@@ -234,16 +180,9 @@ namespace Battery_Shop.Migrations
 
             modelBuilder.Entity("Battery_Shop.Models.BatteryShop", b =>
                 {
-                    b.Navigation("Customers");
-
                     b.Navigation("Employees");
 
                     b.Navigation("Storages");
-                });
-
-            modelBuilder.Entity("Battery_Shop.Models.Customer", b =>
-                {
-                    b.Navigation("Batteries");
                 });
 
             modelBuilder.Entity("Battery_Shop.Models.Storage", b =>
