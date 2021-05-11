@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace Battery_Shop.Models
 {
-    public class BatteryShop
+    public class Customer
     {
-        public BatteryShop() 
+        public Customer()
         {
-            this.Employees = new HashSet<Employee>();
-            this.Storages = new HashSet<Storage>();
-            this.Customers = new HashSet<Customer>();
+            this.Batteries = new HashSet<Battery>();
         }
 
         [Key]
@@ -25,17 +23,20 @@ namespace Battery_Shop.Models
         [MaxLength(16)]
         public string Name { get; set; }
 
+        [Required]
+        [MinLength(3)]
+        [MaxLength(32)]
+        public string LastName { get; set; }
+
+        [Required]
         [MinLength(3)]
         [MaxLength(64)]
         public string Address { get; set; }
 
-        [Required]
-        [MinLength(9)]
-        [MaxLength(11)]
-        public string Phone { get; set; }
+        public ICollection<Battery> Batteries { get; set; }
 
-        public ICollection<Employee> Employees { get; set; }
-        public ICollection<Storage> Storages { get; set; }
-        public ICollection<Customer> Customers { get; set; }
+        [Required]
+        public int BatteryShopId { get; set; }
+        public virtual BatteryShop BatteryShop { get; set; }
     }
 }

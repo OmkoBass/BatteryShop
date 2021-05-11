@@ -27,6 +27,7 @@ namespace Battery_Shop.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var AllBatteries = await _unitOfWork.IBatteryRepo.GetAllBatteries();
@@ -35,6 +36,7 @@ namespace Battery_Shop.Controllers
         }
 
         [HttpGet(":id")]
+        [AllowAnonymous]
         public async Task<IActionResult> Get(int Id)
         {
             var Battery = await _unitOfWork.IBatteryRepo.GetBattery(Id);
@@ -53,8 +55,8 @@ namespace Battery_Shop.Controllers
             if (ModelState.IsValid)
             {
                 var AddedBattery = _mapper.Map<Battery>(Battery);
-                AddedBattery.Warrant = DateTime.Now.AddDays(2);
                 AddedBattery.Life = 100;
+                AddedBattery.Sold = false;
 
                 await _unitOfWork.IBatteryRepo.AddBattery(AddedBattery);
                 await _unitOfWork.Complete();
@@ -99,6 +101,57 @@ namespace Battery_Shop.Controllers
 
             _unitOfWork.IBatteryRepo.DeleteBattery(Battery);
             await _unitOfWork.Complete();
+
+            return Ok(Battery);
+        }
+
+        [HttpGet("check/:id")]
+        public async Task<IActionResult> CheckBattery(int Id)
+        {
+            var Battery = await _unitOfWork.IBatteryRepo.GetBattery(Id);
+
+            if (Battery.Life >= 60)
+            {
+                Battery.Life = 100;
+
+                return Ok(Battery);
+            }
+
+            if (Battery.Warrant < DateTime.Now)
+            {
+                return Ok(new { Message = "Your warranty ran out!" });
+            }
+
+            return Ok(new { Message = "Choose a new battery!" });
+        }
+
+        [HttpGet(":batteryId/:customerId")]
+        public async Task<IActionResult> BuyBattery(int BatteryId, int CustomerId)
+        {
+            int JobId = Int32.Parse(User.FindFirst("Job").Value);
+
+            if (JobId != 1)
+            {
+                return Unauthorized(new { Message = "Only Employees can do this!" });
+            }
+
+            var Battery = await _unitOfWork.IBatteryRepo.GetBattery(BatteryId);
+
+            if(Battery == null)
+            {
+                return BadRequest(new { Message = "Invalid Battery Id!" });
+            }
+
+            var Customer = await _unitOfWork.ICustomerRepo.GetCustomer(CustomerId);
+
+            if(Customer == null)
+            {
+                return BadRequest(new { Message = "Invalid Customer Id!" });
+            }
+
+            Battery.CustomerId = Customer.Id;
+            Battery.Sold = true;
+            Battery.Warrant = DateTime.Now.AddYears(2);
 
             return Ok(Battery);
         }
