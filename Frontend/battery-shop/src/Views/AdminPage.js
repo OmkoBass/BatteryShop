@@ -82,7 +82,7 @@ export default function AdminPage() {
           searchedEmployeeInfo.length === 0 ? employees : searchedEmployeeInfo
         }
         columns={columns}
-        rowKey="name"
+        rowKey="id"
         onRow={(record) => {
           return {
             onClick: () => {
