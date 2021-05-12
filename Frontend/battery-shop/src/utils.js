@@ -37,7 +37,7 @@ const getBatteryShop = async () => {
   return await axios.get(`${BACKEND}/api/Employee/loggedIn/batteryShop`);
 };
 
-const getAllBatteries = async (value) => {
+const getAllBatteries = async () => {
   return await axios.get(`${BACKEND}/api/Battery`);
 };
 
@@ -46,7 +46,13 @@ const getBattery = async (id) => {
 };
 
 const deleteEmployee = async (id) => {
+  id = parseInt(id);
   return await axios.delete(`${BACKEND}/api/Employee/:id?Id=${id}`);
+};
+
+const addEmployee = async (values) => {
+  values.job = parseInt(values.job);
+  return await axios.post(`${BACKEND}/api/Employee`, values);
 };
 
 export {
@@ -58,4 +64,5 @@ export {
   getBatteryShopEmployees,
   deleteEmployee,
   handleDisplayProperJob,
+  addEmployee,
 };
