@@ -86,18 +86,6 @@ export default function Login() {
               Log In
             </Button>
           </Form.Item>
-
-          <Divider style={{ color: "lightGray" }}> OR </Divider>
-
-          <Form.Item>
-            <Button
-              type="default"
-              block={true}
-              onClick={() => history.push("/register")}
-            >
-              Create an account!
-            </Button>
-          </Form.Item>
         </Form>
       </div>
     </div>
