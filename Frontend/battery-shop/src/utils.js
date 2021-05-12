@@ -55,6 +55,18 @@ const addEmployee = async (values) => {
   return await axios.post(`${BACKEND}/api/Employee`, values);
 };
 
+const getStorages = async () => {
+  return await axios.get(`${BACKEND}/api/Storage/loggedIn`);
+};
+
+const getStorage = async (id) => {
+  return await axios.get(`${BACKEND}/api/Storage/:id?Id=${id}`);
+};
+
+const addBattery = async (battery) => {
+  return await axios.post(`${BACKEND}/api/Battery`, battery);
+};
+
 export {
   sendLoginInfo,
   getAllBatteries,
@@ -65,4 +77,7 @@ export {
   deleteEmployee,
   handleDisplayProperJob,
   addEmployee,
+  getStorages,
+  getStorage,
+  addBattery,
 };
