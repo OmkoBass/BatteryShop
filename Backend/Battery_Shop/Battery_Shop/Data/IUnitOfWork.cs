@@ -1,5 +1,6 @@
 ﻿using Battery_Shop.Data.AuthRepo;
 using Battery_Shop.Data.BatteryRepo;
+using Battery_Shop.Data.BatteryShopRepo;
 using Battery_Shop.Data.CustomerRepo;
 using Battery_Shop.Data.EmployeeRepo;
 using Battery_Shop.Data.StorageRepo;
@@ -12,6 +13,7 @@ namespace Battery_Shop.Data
 {
     public interface IUnitOfWork
     {
+        public IBatteryShopRepo IBatteryShopRepo { get; set; }
         public IEmployeeRepo IEmployeeRepo { get; set; }
         public IStorageRepo IStorageRepo { get; set; }
         public IBatteryRepo IBatteryRepo { get; set; }
