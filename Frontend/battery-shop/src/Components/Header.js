@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 
+import { useHistory } from "react-router-dom";
+
 import { Layout, Avatar, Menu, Dropdown } from "antd";
 
 import { AuthContext } from "../Auth";
@@ -8,16 +10,25 @@ import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 
 const { Header } = Layout;
 
-const HeaderMenu = () => {
-  return (
-    <Menu style={{ width: "250px" }}>
-      <Menu.Item icon={<LogoutOutlined />}>Logout</Menu.Item>
-    </Menu>
-  );
-};
-
 export default function HEADER() {
-  const { employee, batteryShop } = useContext(AuthContext);
+  const { setCurrentUser, employee, batteryShop } = useContext(AuthContext);
+
+  const history = useHistory();
+
+  const HeaderMenu = () => {
+    return (
+      <Menu
+        style={{ width: "250px" }}
+        onClick={() => {
+          localStorage.removeItem("BatteryShopToken");
+          setCurrentUser(null);
+          history.push("/login");
+        }}
+      >
+        <Menu.Item icon={<LogoutOutlined />}>Logout</Menu.Item>
+      </Menu>
+    );
+  };
 
   return (
     <Header className="background-blue flex-row">
