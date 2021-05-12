@@ -2,6 +2,20 @@ import axios from "axios";
 
 const BACKEND = `http://localhost:57661`;
 
+const handleDisplayProperJob = (jobId) => {
+  if (jobId === 4) {
+    return "Admin";
+  } else if (jobId === 3) {
+    return "Intervetion";
+  } else if (jobId === 2) {
+    return "Supply";
+  } else if (jobId === 1) {
+    return "Sales";
+  } else {
+    return "Service";
+  }
+};
+
 const sendLoginInfo = async (value) => {
   return await axios.post(`${BACKEND}/authenticate`, {
     username: value.username.toLowerCase(),
@@ -31,6 +45,10 @@ const getBattery = async (id) => {
   return await axios.get(`${BACKEND}/api/Battery/:id?Id=${id}`);
 };
 
+const deleteEmployee = async (id) => {
+  return await axios.delete(`${BACKEND}/api/Employee/:id?Id=${id}`);
+};
+
 export {
   sendLoginInfo,
   getAllBatteries,
@@ -38,4 +56,6 @@ export {
   getBatteryShop,
   getLoggedInEmployee,
   getBatteryShopEmployees,
+  deleteEmployee,
+  handleDisplayProperJob,
 };
