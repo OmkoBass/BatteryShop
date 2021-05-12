@@ -10,6 +10,7 @@ namespace Battery_Shop.Data.EmployeeRepo
     {
         public Task<List<Employee>> GetAllEmployees();
         public Task<Employee> GetEmployee(int EmployeeId);
+        public Task<List<Employee>> GetAllByBatteryShopId(int BatteryShopId);
         public Task<bool> AddEmployee(Employee Employee);
         public bool UpdateEmployee(Employee Employee);
         public bool DeleteEmployee(Employee Employee);

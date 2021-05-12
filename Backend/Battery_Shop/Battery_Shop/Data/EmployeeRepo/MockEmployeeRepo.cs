@@ -27,6 +27,11 @@ namespace Battery_Shop.Data.EmployeeRepo
             return true;
         }
 
+        public async Task<List<Employee>> GetAllByBatteryShopId(int BatteryShopId)
+        {
+            return await _context.Employees.Where(e => e.BatteryShopId == BatteryShopId).ToListAsync();
+        }
+
         public async Task<List<Employee>> GetAllEmployees()
         {
             return await _context.Employees.ToListAsync();
