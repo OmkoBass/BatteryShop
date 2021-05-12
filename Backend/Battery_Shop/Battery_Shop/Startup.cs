@@ -20,6 +20,7 @@ using System.Text;
 using Battery_Shop.Data.BatteryRepo;
 using Battery_Shop.Data.StorageRepo;
 using Battery_Shop.Data.CustomerRepo;
+using Battery_Shop.Data.BatteryShopRepo;
 
 namespace Battery_Shop
 {
@@ -81,6 +82,7 @@ namespace Battery_Shop
 
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
+            services.AddScoped<IBatteryShopRepo, MockBatteryShopRepo>();
             services.AddScoped<IEmployeeRepo, MockEmployeeRepo>();
             services.AddScoped<IStorageRepo, MockStorageRepo>();
             services.AddScoped<IBatteryRepo, MockBatteryRepo>();
