@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-import { Table, Typography, message, Input } from "antd";
+import { Table, Typography, message, Input, Button } from "antd";
 
 import { getBatteryShopEmployees, handleDisplayProperJob } from "../utils";
 
 import EmployeeInfoModal from "../Components/EmployeeInfoModal";
+import AddEmployeeModal from "../Components/AddEmployeeModal";
 
 export default function AdminPage() {
   const [loading, setLoading] = useState(true);
@@ -12,6 +13,7 @@ export default function AdminPage() {
   const [employeeInfoVisible, setEmployeeInfoVisible] = useState(false);
   const [employeeInfo, setEmployeeInfo] = useState(null);
   const [searchedEmployeeInfo, setSearchedEmployeeInfo] = useState([]);
+  const [addEmployeeVisible, setAddEmployeeVisible] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -55,7 +57,11 @@ export default function AdminPage() {
 
   return (
     <div>
+      <Button type="primary" onClick={() => setAddEmployeeVisible(true)}>
+        Add Employee
+      </Button>
       <Input.Search
+        style={{ marginTop: "1em" }}
         placeholder={"Enter name of the employee"}
         allowClear
         onSearch={(value) => {
@@ -86,10 +92,22 @@ export default function AdminPage() {
           };
         }}
       />
+
       <EmployeeInfoModal
+        removeEmployeeFromTable={(id) =>
+          setEmployees(employees.filter((employee) => employee.id !== id))
+        }
         visible={employeeInfoVisible}
         employee={employeeInfo}
         handleClose={() => setEmployeeInfoVisible(false)}
+      />
+
+      <AddEmployeeModal
+        visible={addEmployeeVisible}
+        handleClose={() => setAddEmployeeVisible(false)}
+        addEmployeeToTable={(employee) =>
+          setEmployees([...employees, employee])
+        }
       />
     </div>
   );
