@@ -10,6 +10,8 @@ import { AuthContext } from "../Auth";
 import HEADER from "../Components/Header";
 import AdminPage from "./AdminPage";
 import axios from "axios";
+import StoragePage from "./StoragePage";
+import Storage from "./Storage";
 
 const { Content, Footer } = Layout;
 
@@ -38,9 +40,9 @@ export default function Dashboard() {
           if (employee.job === 4) {
             history.push("/admin");
           } else if (employee.job === 3) {
-            console.log("INTERVETION");
+            console.log("INTERVENTION");
           } else if (employee.job === 2) {
-            console.log("SUPPLY");
+            history.push("/storage");
           } else if (employee.job === 1) {
             console.log("SALES");
           } else {
@@ -59,7 +61,9 @@ export default function Dashboard() {
       <HEADER />
       <Content style={{ padding: "2em" }}>
         <Switch>
+          <Route path={`/storage/:id`} component={Storage} />
           <Route path={`/admin`} component={AdminPage} />
+          <Route path={`/storage`} component={StoragePage} />
         </Switch>
       </Content>
       <Footer style={{ textAlign: "center" }}>@OmkoBass</Footer>
