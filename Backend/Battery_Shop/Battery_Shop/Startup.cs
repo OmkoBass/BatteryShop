@@ -42,7 +42,8 @@ namespace Battery_Shop
             {
                 options.AddPolicy("AllowFromAll",
                     builder => builder
-                    .WithMethods().AllowAnyMethod()
+                    .WithMethods()
+                    .AllowAnyMethod()
                     .AllowAnyOrigin()
                     .AllowAnyHeader());
             });
