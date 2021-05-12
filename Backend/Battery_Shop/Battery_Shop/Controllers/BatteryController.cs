@@ -128,12 +128,12 @@ namespace Battery_Shop.Controllers
         [HttpGet(":batteryId/:customerId")]
         public async Task<IActionResult> BuyBattery(int BatteryId, int CustomerId)
         {
-            int JobId = Int32.Parse(User.FindFirst("Job").Value);
+            //string JobId = User.FindFirst("Job").Value;
 
-            if (JobId != 1)
-            {
-                return Unauthorized(new { Message = "Only Employees can do this!" });
-            }
+            //if (int.Parse(JobId) != 1)
+            //{
+            //    return Unauthorized(new { Message = "Only Employees can do this!" });
+            //}
 
             var Battery = await _unitOfWork.IBatteryRepo.GetBattery(BatteryId);
 
