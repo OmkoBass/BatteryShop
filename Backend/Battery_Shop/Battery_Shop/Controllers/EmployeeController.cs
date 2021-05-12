@@ -25,6 +25,30 @@ namespace Battery_Shop.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("loggedIn/batteryShop/employees")]
+        public async Task<IActionResult> GetBatteryShopEmployees()
+        {
+            int BatteryShopId = Int32.Parse(User.FindFirst("BatteryShopId").Value);
+
+            return Ok(await _unitOfWork.IEmployeeRepo.GetAllByBatteryShopId(BatteryShopId));
+        }
+
+        [HttpGet("loggedIn/batteryShop")]
+        public async Task<IActionResult> GetLoggedInBatteryStore()
+        {
+            int BatteryShopId = Int32.Parse(User.FindFirst("BatteryShopId").Value);
+
+            return Ok(await _unitOfWork.IBatteryShopRepo.GetBatteryShop(BatteryShopId));
+        }
+
+        [HttpGet("loggedIn")]
+        public async Task<IActionResult> GetLoggedInEmployee()
+        {
+            int EmployeeId = Int32.Parse(User.FindFirst("Id").Value);
+
+            return Ok(await _unitOfWork.IEmployeeRepo.GetEmployee(EmployeeId));
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
