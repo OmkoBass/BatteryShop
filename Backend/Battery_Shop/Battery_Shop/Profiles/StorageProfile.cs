@@ -13,6 +13,7 @@ namespace Battery_Shop.Profiles
         public StorageProfile()
         {
             CreateMap<Storage, AddStorageDto>().ReverseMap();
+            CreateMap<Storage, StorageDto>().ReverseMap();
         }
     }
 }

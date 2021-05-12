@@ -25,6 +25,14 @@ namespace Battery_Shop.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("loggedIn")]
+        public async Task<IActionResult> GetLoggedInEmployee()
+        {
+            int BatteryShopId = Int32.Parse(User.FindFirst("BatteryShopId").Value);
+
+            return Ok(await _unitOfWork.IStorageRepo.GetStoragesByBatteryStore(BatteryShopId));
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -40,7 +48,7 @@ namespace Battery_Shop.Controllers
 
             if (Storage != null)
             {
-                return Ok(Storage);
+                return Ok(_mapper.Map<StorageDto>(Storage));
             }
 
             return NotFound(new { Message = $"Storage with Id:{Id} not found!" });

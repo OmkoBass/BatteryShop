@@ -34,7 +34,12 @@ namespace Battery_Shop.Data.StorageRepo
 
         public async Task<Storage> GetStorage(int Id)
         {
-            return await _context.Storages.FirstOrDefaultAsync(s => s.Id == Id);
+            return await _context.Storages.Include(st => st.Batteries).FirstOrDefaultAsync(s => s.Id == Id);
+        }
+
+        public async Task<List<Storage>> GetStoragesByBatteryStore(int BatterShopId)
+        {
+            return await _context.Storages.Where(st => st.BatterShopId == BatterShopId).ToListAsync();
         }
 
         public bool UpdateStorage(Storage Storage)

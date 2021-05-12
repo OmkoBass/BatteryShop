@@ -11,6 +11,7 @@ namespace Battery_Shop.Data.StorageRepo
         public Task<List<Storage>> GetAllStorages();
         public Task<Storage> GetStorage(int Id);
         public Task<bool> AddStorage(Storage Storage);
+        public Task<List<Storage>> GetStoragesByBatteryStore(int BatterShopId);
         public bool UpdateStorage(Storage Storage);
         public bool DeleteStorage(Storage Storage);
     }
