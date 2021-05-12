@@ -67,7 +67,7 @@ export default function AdminPage() {
         onSearch={(value) => {
           if (value) {
             setSearchedEmployeeInfo(
-              employees.filter((employee) => employee.name === value)
+              employees.filter((employee) => employee.name.includes(value))
             );
           } else {
             setSearchedEmployeeInfo([]);
