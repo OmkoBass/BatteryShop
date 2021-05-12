@@ -21,6 +21,7 @@ export default function Dashboard() {
   axios.defaults.headers.get["Authorization"] = currentUser;
   axios.defaults.headers.put["Authorization"] = currentUser;
   axios.defaults.headers.post["Authorization"] = currentUser;
+  axios.defaults.headers.delete["Authorization"] = currentUser;
 
   useEffect(() => {
     if (!currentUser) {
