@@ -34,12 +34,37 @@ namespace Battery_Shop.Controllers
             return Ok(AllBatteries);
         }
 
+        [HttpGet("replace/:id")]
+        public async Task<IActionResult> ReplaceBattery(int Id)
+        {
+            var Battery = await _unitOfWork.IBatteryRepo.GetBattery(Id);
+
+            if(Battery == null)
+            {
+                return NotFound(new { Message = $"Battery with Id:{Id} not found!" });
+            }
+
+            Battery.Replacement = false;
+
+            return Ok(new { Message = "Battery replaced" });
+        }
+
+        [HttpGet("replacement")]
+        public async Task<IActionResult> GetReplacementBatteriesByBatteryShop()
+        {
+            int BatteryShopId = int.Parse(User.FindFirst("BatteryShopId").Value);
+
+            var AllBatteries = await _unitOfWork.IBatteryRepo.GetBatteriesByBatteryShop(BatteryShopId, true, true);
+
+            return Ok(AllBatteries);
+        }
+
         [HttpGet("sold")]
         public async Task<IActionResult> GetSoldBatteriesByBatteryShop()
         {
             int BatteryShopId = int.Parse(User.FindFirst("BatteryShopId").Value);
 
-            var AllBatteries = await _unitOfWork.IBatteryRepo.GetBatteriesByBatteryShop(BatteryShopId, true, true);
+            var AllBatteries = await _unitOfWork.IBatteryRepo.GetBatteriesByBatteryShop(BatteryShopId, true, false);
 
             return Ok(AllBatteries);
         }
@@ -49,7 +74,7 @@ namespace Battery_Shop.Controllers
         {
             int BatteryShopId = int.Parse(User.FindFirst("BatteryShopId").Value);
 
-            var AllBatteries = await _unitOfWork.IBatteryRepo.GetBatteriesByBatteryShop(BatteryShopId);
+            var AllBatteries = await _unitOfWork.IBatteryRepo.GetBatteriesByBatteryShop(BatteryShopId, false, false);
 
             return Ok(AllBatteries);
         }
@@ -143,6 +168,8 @@ namespace Battery_Shop.Controllers
             }
 
             Battery.Replacement = true;
+            await _unitOfWork.Complete();
+
             return Ok(new { Message = "Choose a new battery!" });
         }
 
