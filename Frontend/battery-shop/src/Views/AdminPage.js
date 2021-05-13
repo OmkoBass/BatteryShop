@@ -26,19 +26,19 @@ export default function AdminPage() {
   useEffect(() => {
     if (employee?.job !== 4) {
       history.push("/");
+    } else {
+      (async () => {
+        try {
+          const { data } = await getBatteryShopEmployees();
+
+          setEmployees(data);
+        } catch {
+          message.error("Something went wrong!");
+        } finally {
+          setLoading(false);
+        }
+      })();
     }
-
-    (async () => {
-      try {
-        const { data } = await getBatteryShopEmployees();
-
-        setEmployees(data);
-      } catch {
-        message.error("Something went wrong!");
-      } finally {
-        setLoading(false);
-      }
-    })();
   }, [employee?.job, history]);
 
   const columns = [
