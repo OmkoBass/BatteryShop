@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 
 import { getLoggedInEmployee, getBatteryShop } from "../utils";
 
@@ -19,6 +19,7 @@ export default function Dashboard() {
   const { currentUser, setBatteryShop, setEmployee } = useContext(AuthContext);
 
   const history = useHistory();
+  const { pathname } = useLocation();
 
   axios.defaults.headers.get["Authorization"] = currentUser;
   axios.defaults.headers.put["Authorization"] = currentUser;
@@ -37,16 +38,18 @@ export default function Dashboard() {
           setEmployee(employee);
           setBatteryShop(batteryShop);
 
-          if (employee.job === 4) {
-            history.push("/admin");
-          } else if (employee.job === 3) {
-            console.log("INTERVENTION");
-          } else if (employee.job === 2) {
-            history.push("/storage");
-          } else if (employee.job === 1) {
-            console.log("SALES");
-          } else {
-            console.log("SERVICE");
+          if (pathname === "/dashboard") {
+            if (employee.job === 4) {
+              history.push("/admin");
+            } else if (employee.job === 3) {
+              console.log("INTERVENTION");
+            } else if (employee.job === 2) {
+              history.push("/storage");
+            } else if (employee.job === 1) {
+              console.log("SALES");
+            } else {
+              console.log("SERVICE");
+            }
           }
         } catch {
           message.error("Something went wrong!");
@@ -54,7 +57,7 @@ export default function Dashboard() {
         }
       })();
     }
-  }, [currentUser, history, setBatteryShop, setEmployee]);
+  }, [currentUser, history, pathname, setBatteryShop, setEmployee]);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
