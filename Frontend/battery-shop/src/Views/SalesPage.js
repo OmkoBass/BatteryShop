@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { useHistory } from "react-router-dom";
+
 import { getBatteriesByBatteryShop, batteryColumns } from "../utils";
 
 import {Table, message, Input, Button} from "antd";
@@ -12,6 +14,8 @@ export default function SalesPage() {
     const [selectedBattery, setSelectedBattery] = useState(null);
     const [sellBatteryModal, setSellBatteryModal] = useState(false);
     const [loading, setLoading] = useState(true);
+
+    const history = useHistory();
 
     useEffect(() => {
         (async () => {
@@ -44,7 +48,7 @@ export default function SalesPage() {
             Intervention
         </Button>
 
-        <Button type="primary" style={{ marginLeft: '1em' }}>
+        <Button type="primary" style={{ marginLeft: '1em' }} onClick={() => history.push('sales/warranties')}>
             Warranties
         </Button>
 
@@ -73,7 +77,8 @@ export default function SalesPage() {
             rowKey={"id"}
             loading={loading}
             dataSource={searchedBatteries.length === 0 ? batteries : searchedBatteries}
-            columns={batteryColumns}
+            columns={batteryColumns
+            }
         />
 
         <SellBatteryModal
