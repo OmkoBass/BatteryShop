@@ -38,7 +38,7 @@ export default function Dashboard() {
           setEmployee(employee);
           setBatteryShop(batteryShop);
 
-          if (pathname === "/dashboard") {
+          if (pathname === "/") {
             if (employee.job === 4) {
               history.push("/admin");
             } else if (employee.job === 3) {

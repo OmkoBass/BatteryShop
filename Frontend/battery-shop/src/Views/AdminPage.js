@@ -25,7 +25,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (employee?.job !== 4) {
-      history.push("/dashboard");
+      history.push("/");
     }
 
     (async () => {
