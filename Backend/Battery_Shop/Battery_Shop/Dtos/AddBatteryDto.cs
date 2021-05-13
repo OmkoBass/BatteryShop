@@ -18,5 +18,8 @@ namespace Battery_Shop.Dtos
 
         [Required]
         public int StorageId { get; set; }
+
+        [Required]
+        public int BatteryShopId { get; set; }
     }
 }

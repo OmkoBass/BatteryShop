@@ -27,7 +27,6 @@ namespace Battery_Shop.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var AllBatteries = await _unitOfWork.IBatteryRepo.GetAllBatteries();
@@ -36,7 +35,6 @@ namespace Battery_Shop.Controllers
         }
 
         [HttpGet(":id")]
-        [AllowAnonymous]
         public async Task<IActionResult> Get(int Id)
         {
             var Battery = await _unitOfWork.IBatteryRepo.GetBattery(Id);

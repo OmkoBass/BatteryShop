@@ -36,5 +36,8 @@ namespace Battery_Shop.Models
 
         public int? CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
+
+        public int BatteryShopId { get; set; }
+        public virtual BatteryShop BatteryShop { get; set; }
     }
 }
