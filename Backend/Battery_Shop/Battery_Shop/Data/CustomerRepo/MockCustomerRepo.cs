@@ -23,12 +23,20 @@ namespace Battery_Shop.Data.CustomerRepo
 
         public async Task<List<Customer>> GetAllCustomers()
         {
-            return await _context.Customers.ToListAsync();
+            return await _context.Customers.Include(c => c.Batteries).ToListAsync();
         }
 
         public async Task<Customer> GetCustomer(int Id)
         {
             return await _context.Customers.FirstOrDefaultAsync(c => c.Id == Id);
+        }
+
+        public async Task<Customer> GetCustomerByInfo(string Name, string Lastname, string Address)
+        {
+            return await _context.Customers.FirstOrDefaultAsync(c => c.Name == Name
+                && c.LastName == Lastname
+                && c.Address == Address
+                );
         }
     }
 }

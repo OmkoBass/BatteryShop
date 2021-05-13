@@ -30,7 +30,7 @@ namespace Battery_Shop.Controllers
         {
             var Customers = await _unitOfWork.ICustomerRepo.GetAllCustomers();
 
-            return Ok(Customers);
+            return Ok(_mapper.Map<List<CustomerDto>>(Customers));
         }
 
         [HttpGet(":id")]

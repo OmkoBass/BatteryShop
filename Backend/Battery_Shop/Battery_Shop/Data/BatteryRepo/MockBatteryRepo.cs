@@ -33,6 +33,11 @@ namespace Battery_Shop.Data.BatteryRepo
             return await _context.Batteries.ToListAsync();
         }
 
+        public async Task<List<Battery>> GetBatteriesByBatteryShop(int BatteryShopId)
+        {
+            return await _context.Batteries.Where(b => b.BatteryShopId == BatteryShopId).ToListAsync();
+        }
+
         public async Task<Battery> GetBattery(int Id)
         {
             return await _context.Batteries.FirstOrDefaultAsync(b => b.Id == Id);

@@ -34,6 +34,16 @@ namespace Battery_Shop.Controllers
             return Ok(AllBatteries);
         }
 
+        [HttpGet("batteryShop")]
+        public async Task<IActionResult> GetBatteriesByBatteryShop()
+        {
+            int BatteryShopId = int.Parse(User.FindFirst("BatteryShopId").Value);
+
+            var AllBatteries = await _unitOfWork.IBatteryRepo.GetBatteriesByBatteryShop(BatteryShopId);
+
+            return Ok(AllBatteries);
+        }
+
         [HttpGet(":id")]
         public async Task<IActionResult> Get(int Id)
         {
@@ -123,8 +133,8 @@ namespace Battery_Shop.Controllers
             return Ok(new { Message = "Choose a new battery!" });
         }
 
-        [HttpGet(":batteryId/:customerId")]
-        public async Task<IActionResult> BuyBattery(int BatteryId, int CustomerId)
+        [HttpPost("sell/:batteryId")]
+        public async Task<IActionResult> BuyBattery(int BatteryId, [FromBody]AddCustomerDto Customer)
         {
             //string JobId = User.FindFirst("Job").Value;
 
@@ -133,6 +143,8 @@ namespace Battery_Shop.Controllers
             //    return Unauthorized(new { Message = "Only Employees can do this!" });
             //}
 
+            int BatteryShopId = int.Parse(User.FindFirst("BatteryShopId").Value);
+
             var Battery = await _unitOfWork.IBatteryRepo.GetBattery(BatteryId);
 
             if(Battery == null)
@@ -140,18 +152,36 @@ namespace Battery_Shop.Controllers
                 return BadRequest(new { Message = "Invalid Battery Id!" });
             }
 
-            var Customer = await _unitOfWork.ICustomerRepo.GetCustomer(CustomerId);
-
-            if(Customer == null)
+            if(Battery.Sold)
             {
-                return BadRequest(new { Message = "Invalid Customer Id!" });
+                return BadRequest(new { Message = "Battery already sold!" });
             }
 
-            Battery.CustomerId = Customer.Id;
-            Battery.Sold = true;
-            Battery.Warrant = DateTime.Now.AddYears(2);
+            var FoundCustomer = await _unitOfWork.ICustomerRepo.GetCustomerByInfo(Customer.Name, Customer.LastName, Customer.Address);
 
-            return Ok(Battery);
+            if(FoundCustomer != null)
+            {
+                Battery.CustomerId = FoundCustomer.Id;
+                Battery.Sold = true;
+                Battery.Warrant = DateTime.Now.AddYears(2);
+            } else
+            {
+                var AddCustomer = _mapper.Map<Customer>(Customer);
+
+                AddCustomer.BatteryShopId = BatteryShopId;
+
+                await _unitOfWork.ICustomerRepo.AddCustomer(AddCustomer);
+
+                await _unitOfWork.Complete();
+
+                Battery.CustomerId = AddCustomer.Id;
+                Battery.Sold = true;
+                Battery.Warrant = DateTime.Now.AddYears(2);
+            }
+
+            await _unitOfWork.Complete();
+
+            return Ok(_mapper.Map<BatteryDto>(Battery));
         }
     }
 }
