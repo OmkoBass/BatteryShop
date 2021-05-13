@@ -45,6 +45,7 @@ export default function Storage() {
         </Typography.Text>
       ),
       dataIndex: "price",
+        sorter: (a, b) => a.price - b.price,
     },
   ];
 
