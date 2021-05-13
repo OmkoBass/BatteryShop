@@ -2,9 +2,9 @@ import React from "react";
 
 import axios from "axios";
 
-import {Typography} from "antd";
+import { Typography } from "antd";
 
-import {DollarTwoTone, ThunderboltTwoTone} from "@ant-design/icons";
+import { DollarTwoTone, ThunderboltTwoTone } from "@ant-design/icons";
 
 const BACKEND = `http://localhost:57661`;
 
@@ -93,6 +93,14 @@ const handleCheckBattery = async (id) => {
   return await axios.get(`${BACKEND}/api/Battery/check/:id?Id=${id}`);
 }
 
+const getReplacementBatteries = async () => {
+  return await axios.get(`${BACKEND}/api/Battery/replacement`);
+}
+
+const replaceBattery = async (id) => {
+  return await axios.get(`${BACKEND}/api/Battery/replace/:id?Id=${id}`);
+}
+
 const batteryColumns = [
   {
     title: "Id",
@@ -146,5 +154,7 @@ export {
   sellBattery,
   getCustomer,
   handleCheckBattery,
+  getReplacementBatteries,
+  replaceBattery,
   batteryColumns,
 };
