@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { Table, Typography, message, Input, Button } from "antd";
 
+import { useHistory } from "react-router-dom";
+
 import { getBatteryShopEmployees, handleDisplayProperJob } from "../utils";
+
+import { AuthContext } from "../Auth";
 
 import EmployeeInfoModal from "../Components/EmployeeInfoModal";
 import AddEmployeeModal from "../Components/AddEmployeeModal";
@@ -15,7 +19,15 @@ export default function AdminPage() {
   const [searchedEmployeeInfo, setSearchedEmployeeInfo] = useState([]);
   const [addEmployeeVisible, setAddEmployeeVisible] = useState(false);
 
+  const history = useHistory();
+
+  const { employee } = useContext(AuthContext);
+
   useEffect(() => {
+    if (employee?.job !== 4) {
+      history.push("/dashboard");
+    }
+
     (async () => {
       try {
         const { data } = await getBatteryShopEmployees();
@@ -27,7 +39,7 @@ export default function AdminPage() {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [employee?.job, history]);
 
   const columns = [
     {
