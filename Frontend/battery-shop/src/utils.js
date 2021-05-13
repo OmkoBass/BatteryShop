@@ -1,4 +1,10 @@
+import React from "react";
+
 import axios from "axios";
+
+import {Typography} from "antd";
+
+import {DollarTwoTone, ThunderboltTwoTone} from "@ant-design/icons";
 
 const BACKEND = `http://localhost:57661`;
 
@@ -71,9 +77,56 @@ const getBatteriesByBatteryShop = async () => {
   return await axios.get(`${BACKEND}/api/Battery/batteryShop`);
 }
 
+const getSoldBatteriesByBatteryShop = async () => {
+  return await axios.get(`${BACKEND}/api/Battery/sold/`);
+}
+
 const sellBattery = async (customer, id) => {
   return await axios.post(`${BACKEND}/api/Battery/sell/:batteryId?BatteryId=${id}`, customer);
 }
+
+const getCustomer = async (id) => {
+  return await axios.get(`${BACKEND}/api/Customer/:id?Id=${id}`);
+}
+
+const handleCheckBattery = async (id) => {
+  return await axios.get(`${BACKEND}/api/Battery/check/:id?Id=${id}`);
+}
+
+const batteryColumns = [
+  {
+    title: "Id",
+    dataIndex: "id",
+  },
+  {
+    title: "Name",
+    dataIndex: "name",
+  },
+  {
+    title: () => (
+        <Typography.Text>
+          Life <ThunderboltTwoTone twoToneColor="#ffec3d" />
+        </Typography.Text>
+    ),
+    dataIndex: "life",
+    render: (data) => <Typography.Text>{data}</Typography.Text>,
+  },
+  {
+    title: () => (
+        <Typography.Text>
+          Price <DollarTwoTone twoToneColor="#52c41a" />
+        </Typography.Text>
+    ),
+    dataIndex: "price",
+    sorter: (a, b) => a.price - b.price,
+  },
+  {
+    title: 'Sold',
+    dataIndex: 'sold',
+    render: (text) => (<Typography.Text> {text ? 'SOLD' : 'Available'} </Typography.Text>),
+    sorter: (a, b) => a.sold - b.sold
+  }
+];
 
 export {
   sendLoginInfo,
@@ -89,5 +142,9 @@ export {
   getStorage,
   addBattery,
   getBatteriesByBatteryShop,
-  sellBattery
+  getSoldBatteriesByBatteryShop,
+  sellBattery,
+  getCustomer,
+  handleCheckBattery,
+  batteryColumns,
 };
