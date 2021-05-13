@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
-import { Table, message, Typography, Button, Input } from "antd";
+import { Table, message, Typography, Button, Input, PageHeader } from "antd";
 
 import { ThunderboltTwoTone, DollarTwoTone } from "@ant-design/icons";
 
@@ -16,6 +16,7 @@ export default function Storage() {
   const [loading, setLoading] = useState(true);
 
   const [addEmployeeVisible, setAddEmployeeVisible] = useState(false);
+  const history = useHistory();
 
   const { id } = useParams();
 
@@ -63,6 +64,12 @@ export default function Storage() {
 
   return (
     <div>
+      <PageHeader
+        onBack={() => history.goBack()}
+        title={`Storage ${id}`}
+        subTitle="Only articles of this storage will be displayed"
+        style={{ marginLeft: "-2em" }}
+      />
       <Button type="primary" onClick={() => setAddEmployeeVisible(true)}>
         Add Battery
       </Button>
