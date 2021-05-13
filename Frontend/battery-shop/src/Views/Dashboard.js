@@ -13,6 +13,7 @@ import axios from "axios";
 import StoragePage from "./StoragePage";
 import Storage from "./Storage";
 import SalesPage from "./SalesPage";
+import ServicePage from "./ServicePage";
 
 const { Content, Footer } = Layout;
 
@@ -49,7 +50,7 @@ export default function Dashboard() {
             } else if (employee.job === 1) {
               history.push('/sales');
             } else {
-              console.log("SERVICE");
+              history.push('/service');
             }
           }
         } catch {
@@ -69,6 +70,7 @@ export default function Dashboard() {
           <Route path={`/admin`} component={AdminPage} />
           <Route path={`/sales`} component={SalesPage} />
           <Route path={`/storage`} component={StoragePage} />
+          <Route path={`/service`} component={ServicePage} />
         </Switch>
       </Content>
       <Footer style={{ textAlign: "center" }}>@OmkoBass</Footer>
