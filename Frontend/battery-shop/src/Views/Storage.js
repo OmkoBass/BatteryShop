@@ -6,7 +6,7 @@ import { Table, message, Typography, Button, Input, PageHeader } from "antd";
 
 import { ThunderboltTwoTone, DollarTwoTone } from "@ant-design/icons";
 
-import AddBatteryModal from "../Components/AddBaterryModal";
+import AddBatteryModal from "../Components/AddBatteryModal";
 
 import { getStorage } from "../utils";
 

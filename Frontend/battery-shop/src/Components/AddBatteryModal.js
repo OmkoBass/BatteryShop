@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import {
   Modal,
@@ -10,9 +10,11 @@ import {
   notification,
 } from "antd";
 
+import { AuthContext } from "../Auth";
+
 import { addBattery } from "../utils";
 
-export default function AddBaterryModal({
+export default function AddBatteryModal({
   visible,
   onClose,
   storageId,
@@ -20,11 +22,14 @@ export default function AddBaterryModal({
 }) {
   const [loading, setLoading] = useState(false);
 
+  const { batteryShop } = useContext(AuthContext);
+
   const handleOnFinish = (values) => {
     (async () => {
       setLoading(true);
       try {
         values.storageId = storageId;
+        values.batteryShopId = batteryShop.id;
         const { data } = await addBattery(values);
 
         notification.success({
