@@ -68,7 +68,7 @@ export default function Storage() {
         onBack={() => history.goBack()}
         title={`Storage ${id}`}
         subTitle="Only articles of this storage will be displayed"
-        style={{ marginLeft: "-2em" }}
+        style={{ marginLeft: "-2em", marginTop: "-2em" }}
       />
       <Button type="primary" onClick={() => setAddEmployeeVisible(true)}>
         Add Battery
