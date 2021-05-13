@@ -10,7 +10,7 @@ namespace Battery_Shop.Data.BatteryRepo
     {
         public Task<List<Battery>> GetAllBatteries();
         public Task<Battery> GetBattery(int Id);
-        public Task<List<Battery>> GetBatteriesByBatteryShop(int BatteryShopId);
+        public Task<List<Battery>> GetBatteriesByBatteryShop(int BatteryShopId, bool Sold=false, bool Replacement = true);
         public Task<bool> AddBattery(Battery Battery);
         public bool UpdateBattery(Battery Battery);
         public bool DeleteBattery(Battery Battery);

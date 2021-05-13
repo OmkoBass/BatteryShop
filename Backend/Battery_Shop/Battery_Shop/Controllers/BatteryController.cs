@@ -34,6 +34,16 @@ namespace Battery_Shop.Controllers
             return Ok(AllBatteries);
         }
 
+        [HttpGet("sold")]
+        public async Task<IActionResult> GetSoldBatteriesByBatteryShop()
+        {
+            int BatteryShopId = int.Parse(User.FindFirst("BatteryShopId").Value);
+
+            var AllBatteries = await _unitOfWork.IBatteryRepo.GetBatteriesByBatteryShop(BatteryShopId, true, true);
+
+            return Ok(AllBatteries);
+        }
+
         [HttpGet("batteryShop")]
         public async Task<IActionResult> GetBatteriesByBatteryShop()
         {
@@ -118,18 +128,21 @@ namespace Battery_Shop.Controllers
         {
             var Battery = await _unitOfWork.IBatteryRepo.GetBattery(Id);
 
-            if (Battery.Life >= 60)
-            {
-                Battery.Life = 100;
+            Random rand = new Random();
 
-                return Ok(Battery);
+            int BatteryLifeRandom = rand.Next(1, 100);
+
+            if (BatteryLifeRandom >= 50)
+            {
+                return Ok(new { Message = "Recalibrated everything is okay!" });
             }
 
-            if (Battery.Warrant < DateTime.Now)
+            if (DateTime.Now > Battery.Warrant)
             {
                 return Ok(new { Message = "Your warranty ran out!" });
             }
 
+            Battery.Replacement = true;
             return Ok(new { Message = "Choose a new battery!" });
         }
 

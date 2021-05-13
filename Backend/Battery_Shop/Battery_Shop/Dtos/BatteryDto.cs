@@ -19,6 +19,8 @@ namespace Battery_Shop.Dtos
 
         public bool Sold { get; set; }
 
+        public bool Replacement { get; set; }
+
         public int StorageId { get; set; }
         public int? CustomerId { get; set; }
     }

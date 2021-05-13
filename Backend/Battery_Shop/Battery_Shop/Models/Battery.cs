@@ -30,6 +30,8 @@ namespace Battery_Shop.Models
 
         public bool Sold { get; set; }
 
+        public bool Replacement { get; set; }
+
         [Required]
         public int StorageId { get; set; }
         public virtual Storage Storage { get; set; }
