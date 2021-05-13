@@ -26,7 +26,7 @@ export default function Login() {
       const { data } = await sendLoginInfo(value);
 
       setCurrentUser(data.token);
-      history.push("/dashboard");
+      history.push("/");
     } catch {
       message.error("Check your username or password!");
     } finally {
