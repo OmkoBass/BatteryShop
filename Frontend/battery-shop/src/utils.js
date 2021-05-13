@@ -67,6 +67,14 @@ const addBattery = async (battery) => {
   return await axios.post(`${BACKEND}/api/Battery`, battery);
 };
 
+const getBatteriesByBatteryShop = async () => {
+  return await axios.get(`${BACKEND}/api/Battery/batteryShop`);
+}
+
+const sellBattery = async (customer, id) => {
+  return await axios.post(`${BACKEND}/api/Battery/sell/:batteryId?BatteryId=${id}`, customer);
+}
+
 export {
   sendLoginInfo,
   getAllBatteries,
@@ -80,4 +88,6 @@ export {
   getStorages,
   getStorage,
   addBattery,
+  getBatteriesByBatteryShop,
+  sellBattery
 };
