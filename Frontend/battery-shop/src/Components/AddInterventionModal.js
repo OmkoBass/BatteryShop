@@ -63,7 +63,7 @@ export default function AddInterventionModal({ visible, batteries, updateSoldToT
                 rules={[
                     {
                         required: true,
-                        message: "Username is required!",
+                        message: "Location is required!",
                     },
                     {
                         min: 3,
