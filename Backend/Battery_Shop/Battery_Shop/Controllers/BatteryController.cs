@@ -45,6 +45,7 @@ namespace Battery_Shop.Controllers
             }
 
             Battery.Replacement = false;
+            await _unitOfWork.Complete();
 
             return Ok(new { Message = "Battery replaced" });
         }
