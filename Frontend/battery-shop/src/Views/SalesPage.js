@@ -7,12 +7,14 @@ import { getBatteriesByBatteryShop, batteryColumns } from "../utils";
 import {Table, message, Input, Button} from "antd";
 
 import SellBatteryModal from "../Components/SellBatteryModal";
+import AddInterventionModal from "../Components/AddInterventionModal";
 
 export default function SalesPage() {
     const [batteries, setBatteries] = useState([]);
     const [searchedBatteries, setSearchedBatteries] = useState([]);
     const [selectedBattery, setSelectedBattery] = useState(null);
     const [sellBatteryModal, setSellBatteryModal] = useState(false);
+    const [interventionModal, setInterventionModal] = useState(false);
     const [loading, setLoading] = useState(true);
 
     const history = useHistory();
@@ -44,7 +46,7 @@ export default function SalesPage() {
             Sell
         </Button>
 
-        <Button type="primary" style={{ marginLeft: '1em' }}>
+        <Button type="primary" style={{ marginLeft: '1em' }} onClick={() => setInterventionModal(true)}>
             Intervention
         </Button>
 
@@ -93,6 +95,12 @@ export default function SalesPage() {
                     return battery;
                 }))
             }}
+        />
+
+        <AddInterventionModal
+            visible={interventionModal}
+            handleClose={() => setInterventionModal(false)}
+            batteries={batteries}
         />
     </div>
 }
