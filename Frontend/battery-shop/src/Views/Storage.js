@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 
 import { useParams, useHistory } from "react-router-dom";
 
-import { Table, message, Typography, Button, Input, PageHeader } from "antd";
-
-import { ThunderboltTwoTone, DollarTwoTone } from "@ant-design/icons";
+import { Table, message, Button, Input, PageHeader } from "antd";
 
 import AddBatteryModal from "../Components/AddBatteryModal";
 
-import { getStorage } from "../utils";
+import { getStorage, batteryColumns } from "../utils";
 
 export default function Storage() {
   const [batteries, setBatteries] = useState([]);
@@ -19,35 +17,6 @@ export default function Storage() {
   const history = useHistory();
 
   const { id } = useParams();
-
-  const columns = [
-    {
-      title: "Id",
-      dataIndex: "id",
-    },
-    {
-      title: "Name",
-      dataIndex: "name",
-    },
-    {
-      title: () => (
-        <Typography.Text>
-          Life <ThunderboltTwoTone twoToneColor="#ffec3d" />
-        </Typography.Text>
-      ),
-      dataIndex: "life",
-      render: (data) => <Typography.Text>{data}</Typography.Text>,
-    },
-    {
-      title: () => (
-        <Typography.Text>
-          Price <DollarTwoTone twoToneColor="#52c41a" />
-        </Typography.Text>
-      ),
-      dataIndex: "price",
-        sorter: (a, b) => a.price - b.price,
-    },
-  ];
 
   useEffect(() => {
     (async () => {
@@ -98,7 +67,7 @@ export default function Storage() {
         dataSource={
           searchedBatteries.length === 0 ? batteries : searchedBatteries
         }
-        columns={columns}
+        columns={batteryColumns}
       />
 
       <AddBatteryModal
