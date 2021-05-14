@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 
-import {Modal, Form, Input, AutoComplete, Button, InputNumber, Typography} from "antd";
+import { createIntervention } from "../utils";
 
-export default function AddInterventionModal({ visible, batteries, handleClose }) {
+import {Modal, Form, Input, AutoComplete, Button, InputNumber, Typography, message, notification} from "antd";
+
+export default function AddInterventionModal({ visible, batteries, updateSoldToTable, handleClose }) {
     const [battery, setBattery] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -15,9 +17,17 @@ export default function AddInterventionModal({ visible, batteries, handleClose }
     const handleOnFinish = async (values) => {
         setLoading(true);
         try {
+            const { data } = await createIntervention(battery.id, values);
 
+            notification.success({
+                message: data.message,
+                description: `Intervention added on location:${values.location}, battery: ${battery.name}`,
+            });
+            updateSoldToTable(battery);
+            handleClose();
+            setBattery(null);
         } catch {
-
+            message.error('Something went wrong!');
         } finally {
             setLoading(false);
         }
