@@ -11,6 +11,7 @@ import HEADER from "../Components/Header";
 import AdminPage from "./AdminPage";
 import axios from "axios";
 import StoragePage from "./StoragePage";
+import Storage from "./Storage";
 import WarrantiesPage from "./WarrantiesPage";
 import SalesPage from "./SalesPage";
 import ServicePage from "./ServicePage";
@@ -66,6 +67,7 @@ export default function Dashboard() {
       <HEADER />
       <Content style={{ padding: "2em" }}>
         <Switch>
+          <Route path={`/storage/:id`} component={Storage} />
           <Route path={`/sales/warranties`} component={WarrantiesPage} />
           <Route path={`/sales`} component={SalesPage} />
           <Route path={`/admin`} component={AdminPage} />
