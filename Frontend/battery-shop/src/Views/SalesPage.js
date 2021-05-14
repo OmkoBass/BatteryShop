@@ -88,12 +88,8 @@ export default function SalesPage() {
             handleClose={() => setSellBatteryModal(false)}
             battery={selectedBattery}
             updateSoldToTable={received => {
-                setBatteries(batteries.map(battery => {
-                    if(battery.id === received.id) {
-                        return received;
-                    }
-                    return battery;
-                }))
+                setBatteries(batteries.filter(battery => battery.id !== received.id));
+                setSelectedBattery(null);
             }}
         />
 
@@ -101,6 +97,10 @@ export default function SalesPage() {
             visible={interventionModal}
             handleClose={() => setInterventionModal(false)}
             batteries={batteries}
+            updateSoldToTable={(received) => {
+                setBatteries(batteries.filter(battery => battery.id !== received.id));
+                setSelectedBattery(null);
+            }}
         />
     </div>
 }
