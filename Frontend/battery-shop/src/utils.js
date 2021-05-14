@@ -105,6 +105,14 @@ const createIntervention = async (id, intervention) => {
   return await axios.post(`${BACKEND}/api/Intervention/sell/:batteryId?BatteryId=${id}`, intervention);
 }
 
+const getInterventionsForBatteryShop = async () => {
+  return await axios.get(`${BACKEND}/api/Intervention`);
+}
+
+const resolveIntervention = async (interventionId, batteryId, info) => {
+  return await axios.post(`${BACKEND}/api/Intervention/resolve/:interventionId/:batteryId?InterventionId=${interventionId}&BatteryId=${batteryId}`, info)
+}
+
 const batteryColumns = [
   {
     title: "Id",
@@ -161,5 +169,7 @@ export {
   getReplacementBatteries,
   replaceBattery,
   createIntervention,
+  getInterventionsForBatteryShop,
+  resolveIntervention,
   batteryColumns,
 };

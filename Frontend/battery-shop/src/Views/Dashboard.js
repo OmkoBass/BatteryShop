@@ -15,6 +15,7 @@ import Storage from "./Storage";
 import WarrantiesPage from "./WarrantiesPage";
 import SalesPage from "./SalesPage";
 import ServicePage from "./ServicePage";
+import InterventionPage from "./InterventionPage";
 
 const { Content, Footer } = Layout;
 
@@ -45,7 +46,7 @@ export default function Dashboard() {
             if (employee.job === 4) {
               history.push("/admin");
             } else if (employee.job === 3) {
-              console.log("INTERVENTION");
+              history.push("/intervention");
             } else if (employee.job === 2) {
               history.push("/storage");
             } else if (employee.job === 1) {
@@ -69,6 +70,7 @@ export default function Dashboard() {
         <Switch>
           <Route path={`/storage/:id`} component={Storage} />
           <Route path={`/sales/warranties`} component={WarrantiesPage} />
+          <Route path={`/intervention`} component={InterventionPage} />
           <Route path={`/sales`} component={SalesPage} />
           <Route path={`/admin`} component={AdminPage} />
           <Route path={`/sales`} component={SalesPage} />
