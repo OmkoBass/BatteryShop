@@ -101,7 +101,7 @@ export default function SellBatteryModal({ visible, handleClose, battery, update
                     Add
                 </Button>
 
-                <Button style={{ marginLeft: "1em" }} type={"danger"} onClick={() => handleClose()}>
+                <Button style={{ marginLeft: "1em" }} loading={loading} type={"danger"} onClick={() => handleClose()}>
                     Cancel
                 </Button>
             </Form.Item>
