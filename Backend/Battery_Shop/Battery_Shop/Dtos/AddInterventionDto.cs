@@ -19,8 +19,5 @@ namespace Battery_Shop.Dtos
         [MinLength(3)]
         [MaxLength(64)]
         public string Location { get; set; }
-
-        [Required]
-        public int BatteryShopId { get; set; }
     }
 }

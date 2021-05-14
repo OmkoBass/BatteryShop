@@ -63,6 +63,8 @@ namespace Battery_Shop.Controllers
             }
 
             var AddIntervention = _mapper.Map<Intervention>(Intervention);
+            AddIntervention.Price = Battery.Price + 5000;
+            AddIntervention.BatteryId = Battery.Id;
             AddIntervention.BatteryShopId = BatteryShopId;
 
             await _unitOfWork.IInterventionRepo.AddIntervention(AddIntervention);
@@ -70,6 +72,69 @@ namespace Battery_Shop.Controllers
             await _unitOfWork.Complete();
 
             return Ok(new { Message = "Intervention created!" });
+        }
+
+        [HttpPost("resolve/:interventionId/:batteryId")]
+        public async Task<IActionResult> ResolveIntervention(int InterventionId, int BatteryId, [FromBody] AddInterventionWithCustomer Customer)
+        {
+            if (ModelState.IsValid)
+            {
+                int BatteryShopId = int.Parse(User.FindFirst("BatteryShopId").Value);
+
+                var Intervention = await _unitOfWork.IInterventionRepo.GetIntervention(InterventionId);
+
+                if (Intervention == null)
+                {
+                    return NotFound(new { Message = $"Intervention with Id:{InterventionId} not found!" });
+                }
+
+                var Battery = await _unitOfWork.IBatteryRepo.GetBattery(BatteryId);
+
+                if (Intervention == null)
+                {
+                    return NotFound(new { Message = $"Battery with Id:{BatteryId} not found!" });
+                }
+
+                var FoundCustomer = await _unitOfWork.ICustomerRepo.GetCustomerByInfo(Customer.Name, Customer.LastName, Customer.Address);
+
+                if (FoundCustomer != null)
+                {
+                    Battery.CustomerId = FoundCustomer.Id;
+                    Battery.Sold = true;
+                    Battery.Warrant = DateTime.Now.AddYears(2);
+                }
+                else
+                {
+                    var AddCustomerDto = new AddCustomerDto()
+                    {
+                        Name = Customer.Name,
+                        LastName = Customer.LastName,
+                        Address = Customer.Address
+                    };
+
+                    var AddCustomer = _mapper.Map<Customer>(AddCustomerDto);
+
+                    AddCustomer.BatteryShopId = BatteryShopId;
+
+                    await _unitOfWork.ICustomerRepo.AddCustomer(AddCustomer);
+                    await _unitOfWork.Complete();
+
+                    Battery.CustomerId = AddCustomer.Id;
+                    Battery.Sold = true;
+                    Battery.Warrant = DateTime.Now.AddYears(2);
+
+                    await _unitOfWork.Complete();
+                }
+
+                Intervention.Resolved = true;
+                Intervention.Description = Customer.Description;
+
+                await _unitOfWork.Complete();
+
+                return Ok(Intervention);
+            }
+
+            return BadRequest(new { Message = "Invalid info!" });
         }
     }
 }
