@@ -19,6 +19,7 @@ namespace Battery_Shop.Data
         public IStorageRepo IStorageRepo { get; set; }
         public IBatteryRepo IBatteryRepo { get; set; }
         public ICustomerRepo ICustomerRepo { get; set; }
+        public IInterventionRepo IInterventionRepo { get; set; }
         public IAuthRepo IAuthRepo { get; set; }
         public MockUnitOfWork(
             DatabaseContext context,
@@ -27,6 +28,7 @@ namespace Battery_Shop.Data
             IStorageRepo storageRepo,
             IBatteryRepo batteryRepo,
             ICustomerRepo customerRepo,
+            IInterventionRepo interventionRepo,
             IAuthRepo authRepo
         )
         {
@@ -36,6 +38,7 @@ namespace Battery_Shop.Data
             IStorageRepo = storageRepo;
             IBatteryRepo = batteryRepo;
             ICustomerRepo = customerRepo;
+            IInterventionRepo = interventionRepo;
             IAuthRepo = authRepo;
         }   
         

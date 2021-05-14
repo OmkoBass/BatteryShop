@@ -18,6 +18,7 @@ namespace Battery_Shop.Data
         public DbSet<Battery> Batteries { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Intervention> Interventions { get; set; }
         public DbSet<Storage> Storages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -21,6 +21,7 @@ using Battery_Shop.Data.BatteryRepo;
 using Battery_Shop.Data.StorageRepo;
 using Battery_Shop.Data.CustomerRepo;
 using Battery_Shop.Data.BatteryShopRepo;
+using Battery_Shop.Data.InterventionRepo;
 
 namespace Battery_Shop
 {
@@ -88,6 +89,7 @@ namespace Battery_Shop
             services.AddScoped<IStorageRepo, MockStorageRepo>();
             services.AddScoped<IBatteryRepo, MockBatteryRepo>();
             services.AddScoped<ICustomerRepo, MockCustomerRepo>();
+            services.AddScoped<IInterventionRepo, MockInterventionRepo>();
             services.AddScoped<IAuthRepo, MockAuthRepo>();
             services.AddScoped<IUnitOfWork, MockUnitOfWork>();
 
