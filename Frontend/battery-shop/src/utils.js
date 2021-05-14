@@ -101,6 +101,10 @@ const replaceBattery = async (id) => {
   return await axios.get(`${BACKEND}/api/Battery/replace/:id?Id=${id}`);
 }
 
+const createIntervention = async (id, intervention) => {
+  return await axios.post(`${BACKEND}/api/Intervention/sell/:batteryId?BatteryId=${id}`, intervention);
+}
+
 const batteryColumns = [
   {
     title: "Id",
@@ -156,5 +160,6 @@ export {
   handleCheckBattery,
   getReplacementBatteries,
   replaceBattery,
+  createIntervention,
   batteryColumns,
 };
