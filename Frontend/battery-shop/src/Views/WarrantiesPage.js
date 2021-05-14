@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
-import {Table, message, Input, Typography, Button, notification} from "antd";
+import { useHistory } from "react-router-dom";
+
+import {Table, message, Input, Typography, Button, notification, PageHeader } from "antd";
 
 import { getReplacementBatteries, replaceBattery } from "../utils";
 import {DollarTwoTone, ThunderboltTwoTone} from "@ant-design/icons";
@@ -9,6 +11,8 @@ export default function WarrantiesPage() {
     const [batteries, setBatteries] = useState([]);
     const [searchedBatteries, setSearchedBatteries] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const history = useHistory();
 
     const handleReplaceBattery = async (id) => {
         setLoading(true);
@@ -92,8 +96,14 @@ export default function WarrantiesPage() {
     }, []);
 
     return <div>
+        <PageHeader
+            onBack={() => history.goBack()}
+            title={`Warranties`}
+            subTitle="All your warranties are here"
+            style={{ marginLeft: "-2em", marginTop: "-2em" }}
+        />
+
         <Input.Search
-            style={{ marginTop: "1em" }}
             placeholder={"Enter name of the battery"}
             allowClear
             onSearch={(value) => {
