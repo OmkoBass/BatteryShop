@@ -93,6 +93,7 @@ export default function AddBatteryModal({
           </Button>
 
           <Button
+            loading={loading}
             type="danger"
             onClick={() => onClose()}
             style={{ marginLeft: "1em" }}
