@@ -1,16 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import {Descriptions, Modal, message, Button, notification } from "antd";
+import React, {useState, useEffect} from 'react';
+import {Descriptions, Modal, message, Button, notification} from "antd";
 
-import { getCustomer, handleCheckBattery } from "../utils";
+import {getCustomer, handleCheckBattery, deleteBattery} from "../utils";
 
-export default function BatteryInfoModal({ visible, handleClose, battery, removeBatteryFromTable }) {
+export default function BatteryInfoModal({visible, handleClose, battery, removeBatteryFromTable, storage}) {
     const [customer, setCustomer] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(!storage);
+
+    const handleDeleteBattery = async (id) => {
+        setLoading(true);
+        try {
+            await deleteBattery(id);
+
+            notification.success({
+                message: "Battery deleted!",
+                duration: 25
+            })
+
+            removeBatteryFromTable();
+            handleClose();
+        } catch {
+
+        } finally {
+            setLoading(false);
+        }
+    }
 
     const handleCheckWarranty = async () => {
         setLoading(true);
         try {
-            const { data } = await handleCheckBattery(battery.id);
+            const {data} = await handleCheckBattery(battery.id);
 
             notification.success({
                 message: "Battery checked!",
@@ -18,7 +37,7 @@ export default function BatteryInfoModal({ visible, handleClose, battery, remove
                 duration: 25
             });
 
-            if(data.message === 'Choose a new battery!') {
+            if (data.message === 'Choose a new battery!') {
                 removeBatteryFromTable();
             }
 
@@ -31,10 +50,10 @@ export default function BatteryInfoModal({ visible, handleClose, battery, remove
     }
 
     useEffect(() => {
-        if(visible) {
+        if (visible && !storage) {
             (async () => {
                 try {
-                    const { data } = await getCustomer(battery.customerId);
+                    const {data} = await getCustomer(battery.customerId);
 
                     setCustomer(data);
                 } catch {
@@ -70,14 +89,26 @@ export default function BatteryInfoModal({ visible, handleClose, battery, remove
             </Descriptions.Item>
         </Descriptions>
 
-        <Button style={{ marginTop: "1em" }} type="primary" loading={loading}
-            onClick={() => handleCheckWarranty()}
-        >
-            Check Warranty
-        </Button>
+        <div style={{ marginTop: '1em' }}>
+            {
+                storage
+                    ?
+                    <Button type="danger" loading={loading}
+                            onClick={() => handleDeleteBattery(battery.id)}
+                    >
+                        Delete Battery
+                    </Button>
+                    :
+                    <Button style={{marginTop: "1em"}} type="primary" loading={loading}
+                            onClick={() => handleCheckWarranty()}
+                    >
+                        Check Warranty
+                    </Button>
+            }
 
-        <Button style={{ marginLeft: "1em" }} type="danger" onClick={() => handleClose()} loading={loading}>
-            Close
-        </Button>
+            <Button style={{marginLeft: "1em"}} type="danger" onClick={() => handleClose()} loading={loading}>
+                Close
+            </Button>
+        </div>
     </Modal>
 }
