@@ -21,9 +21,13 @@ namespace Battery_Shop.Data.CustomerRepo
             return true;
         }
 
-        public async Task<List<Customer>> GetAllCustomers()
+        public async Task<List<Customer>> GetAllCustomers(int BatteryShopId)
         {
-            return await _context.Customers.Include(c => c.Batteries).ToListAsync();
+            if(BatteryShopId == -1)
+                return await _context.Customers.ToListAsync();
+
+            return await _context.Customers.Where(c => c.BatteryShopId == BatteryShopId).ToListAsync();
+
         }
 
         public async Task<Customer> GetCustomer(int Id)

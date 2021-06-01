@@ -10,7 +10,7 @@ namespace Battery_Shop.Data.CustomerRepo
     {
         public Task<Customer> GetCustomer(int Id);
         public Task<Customer> GetCustomerByInfo(string Name, string Lastname, string Address);
-        public Task<List<Customer>> GetAllCustomers();
+        public Task<List<Customer>> GetAllCustomers(int BatteryShopId = -1);
         public Task<bool> AddCustomer(Customer Customer);
     }
 }
