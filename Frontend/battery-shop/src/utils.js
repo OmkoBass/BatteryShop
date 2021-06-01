@@ -6,7 +6,8 @@ import { Typography } from "antd";
 
 import { DollarTwoTone, ThunderboltTwoTone } from "@ant-design/icons";
 
-const BACKEND = `http://localhost:57661`;
+const BACKEND = 'http://localhost:57661';
+// const BACKEND = `http://omkobass-001-site1.htempurl.com`;
 
 const handleDisplayProperJob = (jobId) => {
   if (jobId === 4) {
@@ -60,6 +61,10 @@ const addEmployee = async (values) => {
   values.job = parseInt(values.job);
   return await axios.post(`${BACKEND}/api/Employee`, values);
 };
+
+const createStorage = async (storage) => {
+  return await axios.post(`${BACKEND}/api/Storage`, storage);
+}
 
 const getStorages = async () => {
   return await axios.get(`${BACKEND}/api/Storage/loggedIn`);
@@ -158,6 +163,7 @@ export {
   deleteEmployee,
   handleDisplayProperJob,
   addEmployee,
+  createStorage,
   getStorages,
   getStorage,
   addBattery,
