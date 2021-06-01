@@ -98,6 +98,10 @@ const getCustomer = async (id) => {
   return await axios.get(`${BACKEND}/api/Customer/:id?Id=${id}`);
 }
 
+const getCustomersForBatteryShop = async () => {
+  return await axios.get(`${BACKEND}/api/Customer/loggedIn/batteryShop`);
+}
+
 const handleCheckBattery = async (id) => {
   return await axios.get(`${BACKEND}/api/Battery/check/:id?Id=${id}`);
 }
@@ -176,6 +180,7 @@ export {
   getSoldBatteriesByBatteryShop,
   sellBattery,
   getCustomer,
+  getCustomersForBatteryShop,
   handleCheckBattery,
   getReplacementBatteries,
   replaceBattery,
