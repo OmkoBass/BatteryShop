@@ -33,6 +33,14 @@ namespace Battery_Shop.Controllers
             return Ok(_mapper.Map<List<CustomerDto>>(Customers));
         }
 
+        [HttpGet("loggedIn/batteryShop")]
+        public async Task<IActionResult> GetAllCustomersForBatteryShop()
+        {
+            int BatteryShopId = Int32.Parse(User.FindFirst("BatteryShopId").Value);
+
+            return Ok(await _unitOfWork.ICustomerRepo.GetAllCustomers(BatteryShopId));
+        }
+
         [HttpGet(":id")]
         public async Task<IActionResult> Get(int Id)
         {
