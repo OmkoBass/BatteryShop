@@ -47,7 +47,6 @@ export default function BatteryInfoModal({ visible, handleClose, battery, remove
     }, [visible]);
 
     return <Modal
-        load
         visible={visible}
         onCancel={handleClose}
         title={battery?.name}
