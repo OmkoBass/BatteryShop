@@ -8,6 +8,8 @@ import { AuthContext } from "../Auth";
 
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 
+import Logo from "../Assets/eBattery.PNG";
+
 const { Header } = Layout;
 
 export default function HEADER() {
@@ -32,7 +34,7 @@ export default function HEADER() {
 
   return (
     <Header className="background-blue flex-row">
-      <h1 style={{ color: "white" }}>Battery Shop</h1>
+      <img src={Logo} alt={"Logo"} style={{ height: '100%' }}/>
       <h1 style={{ color: "white" }}> {batteryShop?.name} </h1>
       <div className="flex-row">
         <h1 style={{ color: "white" }}> {employee?.name} </h1>
