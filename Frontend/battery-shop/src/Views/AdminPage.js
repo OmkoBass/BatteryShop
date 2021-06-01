@@ -76,6 +76,10 @@ export default function AdminPage() {
       <Button type="primary" onClick={() => setAddEmployeeVisible(true)}>
         Add Employee
       </Button>
+
+      <Button style={{ marginLeft: '1em' }} type={"primary"} onClick={() => history.push('/admin/customers')}>
+        Customers
+      </Button>
       <Input.Search
         style={{ marginTop: "1em" }}
         placeholder={"Enter name of the employee"}
