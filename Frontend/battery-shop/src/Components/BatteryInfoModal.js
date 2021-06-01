@@ -41,6 +41,11 @@ export default function BatteryInfoModal({visible, handleClose, battery, removeB
                 removeBatteryFromTable();
             }
 
+            if(data.message === 'Your warranty ran out!') {
+                await deleteBattery(battery.id);
+                removeBatteryFromTable();
+            }
+
             handleClose();
         } catch {
             message.error('Something went wrong!');
