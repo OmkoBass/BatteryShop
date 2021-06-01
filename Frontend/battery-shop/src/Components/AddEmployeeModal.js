@@ -20,6 +20,8 @@ export default function AddEmployeeModal({
 }) {
   const [loading, setLoading] = useState(false);
 
+  const [form] = Form.useForm();
+
   const handleOnFinish = async (value) => {
     setLoading(true);
     try {
@@ -30,7 +32,9 @@ export default function AddEmployeeModal({
         message: "Employee added!",
         description: `Employee ${value.username} added!`,
       });
+
       handleClose();
+      form.resetFields();
     } catch {
       message.error("Something went wrong!");
     } finally {
@@ -45,7 +49,7 @@ export default function AddEmployeeModal({
       footer={false}
       closable={false}
     >
-      <Form onFinish={handleOnFinish}>
+      <Form form={form} onFinish={handleOnFinish}>
         <Form.Item
           name="username"
           rules={[
