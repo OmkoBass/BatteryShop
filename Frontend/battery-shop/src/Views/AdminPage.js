@@ -69,6 +69,10 @@ export default function AdminPage() {
 
   return (
     <div>
+      <Typography.Title level={4}>
+        You are the admin, you can add and delete employees. You can also view your customers.
+      </Typography.Title>
+
       <Button type="primary" onClick={() => setAddEmployeeVisible(true)}>
         Add Employee
       </Button>
