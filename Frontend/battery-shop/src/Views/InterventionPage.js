@@ -77,6 +77,9 @@ export default function InterventionPage() {
     ]
 
     return <div>
+        <Typography.Title level={4}>
+            You can go and resolve interventions here. Enter the info of the customer when finishing up the intervention.
+        </Typography.Title>
         <Input.Search
             style={{ marginTop: "1em" }}
             placeholder={"Enter name of the battery"}

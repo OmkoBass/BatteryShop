@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { getBatteriesByBatteryShop, batteryColumns } from "../utils";
 
-import {Table, message, Input, Button} from "antd";
+import {Table, message, Input, Button, Typography} from "antd";
 
 import SellBatteryModal from "../Components/SellBatteryModal";
 import AddInterventionModal from "../Components/AddInterventionModal";
@@ -42,6 +42,10 @@ export default function SalesPage() {
     };
 
     return <div>
+        <Typography.Title level={4}>
+            You can sell batteries to our customers, create interventions and check warranties here.
+        </Typography.Title>
+
         <Button type="primary" disabled={!selectedBattery} onClick={() => setSellBatteryModal(true)}>
             Sell
         </Button>

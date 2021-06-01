@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import {Table, Input, message} from "antd";
+import {Table, Input, message, Typography} from "antd";
 
 import { getSoldBatteriesByBatteryShop, batteryColumns } from "../utils";
 import BatteryInfoModal from "../Components/BatteryInfoModal";
@@ -27,6 +27,10 @@ export default function ServicePage() {
     }, []);
 
     return <div>
+        <Typography.Title level={4}>
+            You can service the sold batteries of our customers.
+        </Typography.Title>
+
         <Input.Search
             style={{ marginTop: "1em" }}
             placeholder={"Enter name of the battery"}
