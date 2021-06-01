@@ -16,6 +16,7 @@ import WarrantiesPage from "./WarrantiesPage";
 import SalesPage from "./SalesPage";
 import ServicePage from "./ServicePage";
 import InterventionPage from "./InterventionPage";
+import CustomerPage from "./CustomerPage";
 
 const { Content, Footer } = Layout;
 
@@ -72,6 +73,7 @@ export default function Dashboard() {
           <Route path={`/sales/warranties`} component={WarrantiesPage} />
           <Route path={`/intervention`} component={InterventionPage} />
           <Route path={`/sales`} component={SalesPage} />
+          <Route path={`/admin/customers`} component={CustomerPage} />
           <Route path={`/admin`} component={AdminPage} />
           <Route path={`/sales`} component={SalesPage} />
           <Route path={`/storage`} component={StoragePage} />
