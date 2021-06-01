@@ -9,6 +9,7 @@ import { AuthContext } from "../Auth";
 import { Divider, Button, Form, Input, message } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 
+import Logo from "../Assets/eBattery.PNG";
 import "../Styles/login.css";
 
 export default function Login() {
@@ -37,7 +38,11 @@ export default function Login() {
   return (
     <div className="login">
       <div className="login-form">
-        <h1> Battery Shop </h1>
+        <img
+            style={{ width: '100%'}}
+            src={Logo}
+            alt={"Logo"}
+        />
 
         <Divider />
 
