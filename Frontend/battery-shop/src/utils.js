@@ -78,6 +78,10 @@ const addBattery = async (battery) => {
   return await axios.post(`${BACKEND}/api/Battery`, battery);
 };
 
+const deleteBattery = async (id) => {
+  return await axios.delete(`${BACKEND}/api/Battery/:id?Id=${id}`);
+}
+
 const getBatteriesByBatteryShop = async () => {
   return await axios.get(`${BACKEND}/api/Battery/batteryShop`);
 }
@@ -167,6 +171,7 @@ export {
   getStorages,
   getStorage,
   addBattery,
+  deleteBattery,
   getBatteriesByBatteryShop,
   getSoldBatteriesByBatteryShop,
   sellBattery,
